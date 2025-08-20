@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Form</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f7f7f7; padding: 20px; }
+    .container {
+      max-width: 500px; margin: auto; background: #fff; padding: 20px;
+      border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h2 { color: #ff7043; text-align: center; }
+    input, textarea {
+      width: 100%; padding: 10px; margin: 10px 0;
+      border: 1px solid #ddd; border-radius: 8px;
+    }
+    .btn {
+      width: 100%; padding: 12px; border: none; border-radius: 8px;
+      background: #ff7043; color: white; font-size: 16px; cursor: pointer;
+    }
+    .btn:hover { background: #e55b2f; }
+    #order-msg { text-align: center; margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Place Your Order</h2>
+    <form id="orderForm">
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="text" id="phone" placeholder="Phone Number" required>
+      <textarea id="address" placeholder="Delivery Address" required></textarea>
+      <button type="submit" class="btn">Submit Order</button>
+      <p id="order-msg"></p>
+    </form>
+  </div>
+</body>
+<script>
+  document.querySelector("#orderForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = e.target.name.value;
+    const phone = e.target.phone.value;
+    const address = e.target.address.value;
+
+    // ✅ Get logged in userId from localStorage
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+      alert("⚠️ Please login first!");
+      return;
+    }
+
+    // ✅ Get cart items from localStorage
+    const items = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (items.length === 0) {
+      alert("🛒 Your cart is empty!");
+      return;
+    }
+
+    const res = await fetch("http://localhost:3000/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, name, phone, address, items }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert("🎉 Order placed successfully!");
+      localStorage.removeItem("cart"); // ✅ Clear cart after placing order
+      window.location.href = "index.html";
+    } else {
+      alert("❌ " + data.message);
+    }
+  });
+</script>
+
+
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Menu</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      color: #333;
+    }
+
+    header {
+      background: #ff7043;
+      padding: 20px;
+      text-align: center;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card .content {
+      padding: 15px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #222;
+    }
+
+    .card p {
+      margin: 8px 0;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #ff7043;
+      font-size: 16px;
+    }
+
+    .btn {
+      margin-top: 10px;
+      background: #ff7043;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #e55b2f;
+    }
+
+    .cart {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .box1 {
+      width: 330px;
+      height: auto;
+      margin-left: 1191px;
+      margin-top: 0px;
+      position: absolute;
+      display: none;
+      background-color: #e9e9e9;
+    }
+
+    .close {
+      width: 30px;
+      height: 30px;
+      background: red;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      line-height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      position: absolute;
+      top: 0px;
+      right: 10px;
+      margin-bottom: 0px;
+    }
+
+    .p1 {
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .p2 {
+      font-size: 15px;
+      color: #666;
+    }
+
+    .p3 {
+      font-weight: bold;
+      color: #ff7043;
+    }
+
+    .cart-item {
+      padding: 10px;
+      border-bottom: 3px solid #ddd;
+    }
+
+    .remove-item,
+    .buy-item,
+    .buy-all {
+      background: #ff7043;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+
+    .remove-item:hover,
+    .buy-item:hover,
+    .buy-all:hover {
+      background: #e55b2f;
+    }
+
+    .num {
+      position: absolute;
+      top: 13px;
+      right: 15px;
+      background: red;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-weight: bold;
+    }
+
+    .si {
+      background-color: #ff7043;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-left: 933px;
+      font-size: 1.2rem;
+    }
+
+    .li {
+      background-color: #ff7043;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.2rem;
+
+    }
+
+    .si:hover,
+    .li:hover {
+      background: #e55b2f;
+    }
+
+    .cart-footer {
+      padding: 10px;
+      text-align: center;
+      border-top: 2px solid #ccc;
+    }
+
+    .total {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 10px;
+      display: block;
+      color: #222;
+    }
+
+    @media screen and (max-width:1470px) {
+      .si {
+        margin-left: 853px;
+      }
+
+      .cart {
+        right: 40px;
+      }
+
+      .num {
+        right: 40px;
+      }
+    }
+
+    @media screen and (max-width:1428px) {
+      .si {
+        margin-left: 813px;
+      }
+    }
+
+    @media screen and (max-width:1386px) {
+      .si {
+        margin-left: 780px;
+      }
+    }
+
+    @media screen and (max-width:1368px) {
+      .si {
+        margin-left: 760px;
+      }
+    }
+
+    @media screen and (max-width:1335px) {
+      .si {
+        margin-left: 730px;
+      }
+    }
+
+    @media screen and (max-width:1308px) {
+      .si {
+        margin-left: 690px;
+      }
+    }
+
+    @media screen and (max-width:1260px) {
+      .si {
+        margin-left: 650px;
+      }
+    }
+
+    @media screen and (max-width:1228px) {
+      .si {
+        margin-left: 600px;
+      }
+    }
+
+    @media screen and (max-width:1186px) {
+      .si {
+        margin-left: 570px;
+      }
+    }
+
+    @media screen and (max-width:1150px) {
+      .si {
+        margin-left: 530px;
+      }
+    }
+
+    @media screen and (max-width:1110px) {
+      .si {
+        margin-left: 490px;
+      }
+    }
+
+    @media screen and (max-width:1070px) {
+      .si {
+        margin-left: 450px;
+      }
+    }
+
+    @media screen and (max-width:1030px) {
+      .si {
+        margin-left: 410px;
+      }
+    }
+
+    @media screen and (max-width:990px) {
+      .si {
+        margin-left: 370px;
+      }
+    }
+
+    @media screen and (max-width:950px) {
+      .si {
+        margin-left: 330px;
+      }
+    }
+
+    @media screen and (max-width:910px) {
+      .si {
+        margin-left: 290px;
+      }
+    }
+
+    @media screen and (max-width:870px) {
+      .si {
+        margin-left: 250px;
+      }
+    }
+
+    @media screen and (max-width:830px) {
+      .si {
+        margin-left: 210px;
+      }
+    }
+
+    @media screen and (max-width:790px) {
+      .si {
+        margin-left: 170px;
+      }
+    }
+
+    @media screen and (max-width:750px) {
+      .si {
+        margin-left: 130px;
+      }
+    }
+
+    @media screen and (max-width:710px) {
+      .si {
+        margin-left: 210px;
+        font-size: 1rem;
+        padding: 5px;
+      }
+
+      .li {
+        font-size: 1rem;
+        padding: 5px;
+      }
+
+      header {
+        font-size: 17px;
+        margin-left: -110px;
+      }
+
+      .cart {
+        width: 40px;
+        height: 40px;
+        top: 10px;
+        right: 20px;
+      }
+
+      .num {
+        right: 14px;
+        top: 4px;
+      }
+    }
+
+    @media screen and (max-width:670px) {
+      .si {
+        margin-left: 170px;
+        font-size: 1rem;
+      }
+
+      header {
+        font-size: 17px;
+        margin-left: -40px;
+      }
+    }
+
+    @media screen and (max-width:578px) {
+      .si {
+        margin-left: 130px;
+        font-size: 1rem;
+      }
+    }
+
+    @media screen and (max-width:530px) {
+      .si {
+        margin-left: 90px;
+        font-size: 1rem;
+      }
+    }
+
+    @media screen and (max-width:480px) {
+      .si {
+        margin-left: 50px;
+        font-size: 1rem;
+      }
+    }
+
+    @media screen and (max-width:430px) {
+      .si {
+        margin-left: 10px;
+        font-size: 1rem;
+      }
+    }
+
+    @media screen and (max-width:380px) {
+    .num {
+        right: 14px;
+        top: 11px;
+        font-size: 12px;
+    }
+          .cart {
+        width: 30px;
+        height: 30px;
+        top: 16px;
+        right: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <header>🍴 Our Food Menu
+      <a href="signup.html"><button class="si">Signup</button></a>
+      <a href="login.html"><button class="li">Login</button></a>
+    </header>
+    <img src="https://tse4.mm.bing.net/th/id/OIP.9UqfoFXUzuxVO1Hs56PQogHaHa?pid=Api&P=0&h=180" alt="" class="cart">
+    <span class="num">0</span>
+    <div class="box1">
+      <p class="close" id="close">X</p>
+      <div id="cart-items"></div>
+      <div class="cart-footer">
+        <span class="total">Total: ₹0</span>
+        <button class="buy-all">Buy All</button>
+      </div>
+    </div>
+  </nav>
+  <main class="container">
+    <div class="card">
+      <img src="https://tse3.mm.bing.net/th/id/OIP.eKQ6xgkQJ6Z8Tpm64czYKgHaE7?pid=Api&P=0&h=180" alt="Pizza">
+      <div class="content">
+        <h3>Margherita Pizza</h3>
+        <p>Classic cheese and tomato pizza.</p>
+        <div class="price">299</div>
+        <button class="btn">Add to cart</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://tse2.mm.bing.net/th/id/OIP.Ms1Tu5-c-r5LOQ5ZLMkg5gHaE8?pid=Api&P=0&h=180" alt="Burger">
+      <div class="content">
+        <h3>Veggie Burger</h3>
+        <p>Loaded with fresh veggies and sauces.</p>
+        <div class="price">199</div>
+        <button class="btn">Add to cart</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://www.modernhoney.com/wp-content/uploads/2018/08/Fettuccine-Alfredo-Recipe-1.jpg" alt="Pasta">
+      <div class="content">
+        <h3>Pasta Alfredo</h3>
+        <p>Creamy white sauce pasta with herbs.</p>
+        <div class="price">249</div>
+        <button class="btn">Add to cart</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://cdn.loveandlemons.com/wp-content/uploads/2023/06/homemade-ice-cream.jpg" alt="Ice Cream">
+      <div class="content">
+        <h3>Vanilla Ice Cream</h3>
+        <p>Smooth and creamy vanilla ice cream.</p>
+        <div class="price">149</div>
+        <button class="btn">Add to cart</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://tse3.mm.bing.net/th/id/OIP.VWUHpuA_2yaDbYMe0KZgXwHaGM?pid=Api&P=0&h=180" alt="Ice Cream">
+      <div class="content">
+        <h3>Chocolate Ice Cream</h3>
+        <p>Smooth and creamy chocolate ice cream.</p>
+        <div class="price">149</div>
+        <button class="btn">Add to cart</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://tse2.mm.bing.net/th/id/OIP.fntWh9oXg-HAlnFS9mws3gHaFC?pid=Api&P=0&h=180" alt="Ice Cream">
+      <div class="content">
+        <h3>Strawberry Ice Cream</h3>
+        <p>Smooth and creamy strawberry ice cream.</p>
+        <div class="price">149</div>
+        <button class="btn">Add to cart</button>
+      </div>
+    </div>
+
+
+  </main>
+
+  <script>
+    let count = 0;
+    let totalPrice = 0;
+    const totalEl = document.querySelector('.total');
+    const cartCountEl = document.querySelector('.num');
+    const cartItems = document.querySelector('#cart-items');
+
+    // cart array stored in memory + localStorage
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function updateTotal() {
+      totalEl.textContent = `Total: ₹${totalPrice}`;
+    }
+
+    function saveCart() {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const name = btn.parentElement.querySelector('h3').textContent;
+        const description = btn.parentElement.querySelector('p').textContent;
+        const price = parseInt(btn.parentElement.querySelector('.price').textContent);
+
+        const item = { name, description, price };
+        cart.push(item);
+        saveCart();
+
+        count++;
+        cartCountEl.textContent = count;
+
+        totalPrice += price;
+        updateTotal();
+
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.innerHTML = `
+        <p class="p1">${name}</p>
+        <p class="p2">${description}</p>
+        <p class="p3">₹${price}</p>
+        <button class="remove-item">Remove</button>
+      `;
+        cartItems.appendChild(cartItem);
+
+        cartItem.querySelector('.remove-item').addEventListener('click', () => {
+          cartItem.remove();
+          count--;
+          cartCountEl.textContent = count;
+          totalPrice -= price;
+          updateTotal();
+
+          cart = cart.filter(c => !(c.name === name && c.price === price));
+          saveCart();
+        });
+      });
+    });
+
+    document.querySelector(".close").addEventListener("click", () => {
+      document.querySelector(".box1").style.display = "none";
+    });
+
+    document.querySelector(".cart").addEventListener("click", () => {
+      document.querySelector(".box1").style.display = "block";
+    });
+
+    // ✅ Redirect to order form
+    document.querySelector('.buy-all').addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert("🛒 Your cart is empty!");
+        return;
+      }
+      window.location.href = 'form.html';
+    });
+  </script>
+
+
+</body>
+
+</html>
